@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romania</title>
+</head>
+<body>
+    <h1>Romania 300</h1>
+    <span id="question"></span>
+    <span id="result"></span>
+    <div id="buts">
+        <button type="button" id="a"></button>
+        <button type="button" id="b"></button>
+        <button type="button" id="c"></button>
+        <button type="button" id="d"></button>
+    </div>
+
+    <script>
+        let score = 0;
+
+        let myQuestions = [
+            {
+                question: "In what year was the reputation of the eugenics movement leaders reshaped as victims of communism?",
+                answers: { a: "1989", b: "1947", c: "1992", d: "1964" },
+                correctAnswer: "a"
+            }
+        ];
+
+        let questionIndex = 0;
+
+        function renderQuestion() {
+            if (questionIndex >= myQuestions.length) return;
+            let show = document.getElementById('question');
+            let q = myQuestions[questionIndex];
+            show.innerHTML = q.question;
+            Object.entries(q.answers).forEach(([letter, text]) => {
+                const but = document.getElementById(letter);
+                but.innerHTML = text;
+                but.dataset.correct = q.correctAnswer === letter;
+            });
+            questionIndex++;
+        }
+
+        renderQuestion();
+
+        document.getElementById("buts").addEventListener("click", function(e) {
+            const tgt = e.target;
+            if (tgt.type && tgt.type === "button") {
+                if (tgt.dataset.correct === "true") {
+                    // Display "Correct" message
+                    document.getElementById("result").innerText = "Correct";
+                    // Redirect to index.html after 1 second
+                    setTimeout(function() {
+                        window.location.href = "index.html";
+                    }, 1000);
+                    
+                } else {
+                    // Display "Incorrect" message
+                    document.getElementById("result").innerText = "Incorrect";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* CSS for the "off" state of the buttons */
+            .button-off {
+                background-color: #ccc; /* Grey color */
+                color: transparent; /* Hide the text */
+            }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <title>Jeopardy</title>
+    </head>
+
+<body>
+    <h1>Jeopardy</h1>
+
+    <p id="scoreDisplay">Score: 0</p>
+    <button>United States</button>
+    <button>Germany</button>
+    <button>Japan</button>
+    <button>Peru</button>
+    <button>India</button>
+    <button>Romania</button>
+
+    <a href="U100.html">
+        <button id="U100" onclick="updateScore(100, 'U100')">100</button>
+    </a>
+    <a href="G100.html">
+        <button id="G100" onclick="updateScore(100, 'G100')">100</button>
+    </a>
+    <a href="J100.html">
+        <button id="J100" onclick="updateScore(100, 'J100')">100</button>
+    </a>
+    <a href="P100.html">
+        <button id="P100" onclick="updateScore(100, 'P100')">100</button>
+    </a>
+    <a href="I100.html">
+        <button id="I100" onclick="updateScore(100, 'I100')">100</button>
+    </a>
+    <a href="R100.html">
+        <button id="R100" onclick="updateScore(100, 'R100')">100</button>
+    </a>
+    <a href="U200.html">
+        <button id="U200" onclick="updateScore(200, 'U200')">200</button>
+    </a>
+    <a href="G200.html">
+        <button id="G200" onclick="updateScore(200, 'G200')">200</button>
+    </a>
+    <a href="J200.html">
+        <button id="J200" onclick="updateScore(200, 'J200')">200</button>
+    </a>
+    <a href="P200.html">
+        <button id="P200" onclick="updateScore(200, 'P200')">200</button>
+    </a>
+    <a href="I200.html">
+        <button id="I200" onclick="updateScore(200, 'I200')">200</button>
+    </a>
+    <a href="R200.html">
+        <button id="R200" onclick="updateScore(200, 'R200')">200</button>
+    </a>
+    <a href="U300.html">
+        <button id="U300" onclick="updateScore(300, 'U300')">300</button>
+    </a>
+    <a href="G300.html">
+        <button id="G300" onclick="updateScore(300, 'G300')">300</button>
+    </a>
+    <a href="J300.html">
+        <button id="J300" onclick="updateScore(300, 'J300')">300</button>
+    </a>
+    <a href="P300.html">
+        <button id="P300" onclick="updateScore(300, 'P300')">300</button>
+    </a>
+    <a href="I300.html">
+        <button id="I300" onclick="updateScore(300, 'I300')">300</button>
+    </a>
+    <a href="R300.html">
+        <button id="R300" onclick="updateScore(300, 'R300')">300</button>
+    </a>
+
+    <br>
+    <!-- Button to reset score to 0 -->
+    <button onclick="resetScore()">Reset Game</button>
+    <a href="info.html">
+        <button>More Information</button>
+    </a>
+
+    <script>
+        // Retrieve score from localStorage and display it
+        let score = parseInt(localStorage.getItem("score")) || 0;
+        document.getElementById("scoreDisplay").innerText = "Score: " + score;
+
+        // Retrieve button states from localStorage
+        let buttonStates = JSON.parse(localStorage.getItem("buttonStates")) || {};
+
+        // Set button states and colors based on localStorage
+        Object.keys(buttonStates).forEach(function(buttonId) {
+            let button = document.getElementById(buttonId);
+            button.disabled = buttonStates[buttonId].disabled;
+            if (buttonStates[buttonId].disabled) {
+                button.classList.add("button-off");
+            }
+        });
+
+        function updateScore(value, buttonId) {
+            score += value;
+            localStorage.setItem("score", score); // Save score to localStorage
+            document.getElementById("scoreDisplay").innerText = "Score: " + score; // Update score display
+
+            // Toggle button state
+            let button = document.getElementById(buttonId);
+            button.classList.toggle("button-off");
+            button.disabled = !button.disabled;
+
+            // Update button state in localStorage
+            buttonStates[buttonId] = { disabled: button.disabled };
+            localStorage.setItem("buttonStates", JSON.stringify(buttonStates));
+        }
+
+        function resetScore() {
+    // Reset score to 0
+    score = 0;
+    localStorage.setItem("score", score);
+    scoreDisplay.innerText = "Score: " + score;
+
+    // Reset button states and colors
+    let buttons = document.getElementsByTagName("button");
+    for (let i = 0; i < buttons.length; i++) {
+        let buttonId = buttons[i].id;
+        buttons[i].classList.remove("button-off");
+        buttons[i].disabled = false;
+        // Update button state in localStorage
+        buttonStates[buttonId] = { disabled: false };
+    }
+
+    // Clear button states from localStorage
+    localStorage.setItem("buttonStates", JSON.stringify(buttonStates));
+}
+    </script>
+</body>
+</html>

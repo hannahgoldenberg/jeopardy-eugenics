@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United States</title>
+</head>
+<body>
+    <h1>United States 100</h1>
+    <span id="question"></span>
+    <span id="result"></span>
+    <div id="buts">
+        <button type="button" id="a"></button>
+        <button type="button" id="b"></button>
+        <button type="button" id="c"></button>
+        <button type="button" id="d"></button>
+    </div>
+
+    <script>
+        let score = 0;
+
+        let myQuestions = [
+            {
+                question: "Which U.S. laboratory created a 'Biological Experiment Station' to perform eugenics experiments?",
+                answers: { a: "Carnegie Institution", b: "Los Alamos", c: "Cold Spring Harbor", d: "Harvard University" },
+                correctAnswer: "c"
+            }
+        ];
+
+        let questionIndex = 0;
+
+        function renderQuestion() {
+            if (questionIndex >= myQuestions.length) return;
+            let show = document.getElementById('question');
+            let q = myQuestions[questionIndex];
+            show.innerHTML = q.question;
+            Object.entries(q.answers).forEach(([letter, text]) => {
+                const but = document.getElementById(letter);
+                but.innerHTML = text;
+                but.dataset.correct = q.correctAnswer === letter;
+            });
+            questionIndex++;
+        }
+
+        renderQuestion();
+
+        document.getElementById("buts").addEventListener("click", function(e) {
+            const tgt = e.target;
+            if (tgt.type && tgt.type === "button") {
+                if (tgt.dataset.correct === "true") {
+                    // Display "Correct" message
+                    document.getElementById("result").innerText = "Correct";
+                    // Redirect to index.html after 1 second
+                    setTimeout(function() {
+                        window.location.href = "index.html";
+                    }, 1000);
+                    
+                } else {
+                    // Display "Incorrect" message
+                    document.getElementById("result").innerText = "Incorrect";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
